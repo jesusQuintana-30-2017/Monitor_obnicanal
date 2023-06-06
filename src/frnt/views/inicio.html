@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styleResp.css">
+    <link rel="stylesheet" href="css/styleMovil.css">
+    <link rel="stylesheet" href="css/stylefonts.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/r-2.2.3/datatables.min.css" />
+    
+</head>
+
+<body class="text-center bg-secondary position-absolute h-100 col-12 px-0" onload="onLoad()">
+
+    <div class="container-fluid px-0">
+
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="d-flex ">
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="icon-user"></span>
+                    </a>
+                    <div class="dropdown-menu  pb-0" aria-labelledby="dropdownMenuLink">
+                        <a onclick="cerrarSesion()" class="dropdown-item text-danger pb-2" href="#"><span class="icon-switch"></span> Cerrar sesión</a>
+                    </div>
+                </div>
+                <button onclick="modulosToggle()" type="button" class="btn btn-secondary float-rigth mx-1 ml-2"><span class="icon-menu"></span></button>
+                <button onclick="cerrarVentana()" type="button" class="btn btn-danger float-rigth mx-1"><span class="icon-home"></span></button>
+                <button onclick="consultarAgnt()" id="btnConsultas" type="button" class="btn btn-success float-rigth mx-1"><span class="icon-search"></span></button>
+                <button class="btn btn-secondary" id="btnExcel" onclick="exportarExcel()" style="color: white; float: right;" title="Exportar Excel"><span class="icon-file-excel"></span></button>
+            </div>
+            <div class="float-rigth text-white">
+                <div id="circulo_estatus" class="circulo_estatus float-left"></div>
+                <div class="float-left" id="usuario">Usuario</div>
+                <div class="col" id="usuario_">Usuario</div>
+            </div>
+            <img src="img/logoTipo.png" alt="" id="logoSpartacus">
+        </nav>
+    </div>
+    <div class="position-relative d-flex" style="height: calc(100% - 72px); width: 100%;">
+        <div id="modulosCont" class="col-3 float-left bg-secondary h-100" style="overflow-y: scroll; display: none;">
+            <div class="input-group my-3">
+                <div class="input-group-prepend">
+                    <label style="font-size: smaller;" class="input-group-text" for="comboPerfil">Perfil</label>
+                </div>
+                <select onchange="cambioPerfil()" style="font-size: smaller;" class="custom-select" id="comboPerfil"></select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label style="font-size: smaller;" class="input-group-text" for="comboPerfil">Modulos</label>
+                </div>
+                <select onchange="cambioModulo()" style="font-size: smaller;" class="custom-select" id="comboModulos"></select>
+            </div>
+            <div class="accordion" id="accordionModulos">
+            </div>
+        </div>
+        <div class="col d-none  float-left bg-light h-100 px-0 position-relative" id="divOpen">
+        </div>
+        <div class="col float-left  h-100 px-0 position-relative divbody">
+            <div class="card mx-0" style="padding-top: 15px;">
+                <div class="card-container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="row mx-0" id="monitorForm_">
+                                <div class="col-md-4">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div style="font-size: medium;" class="input-group-text form-control-sm">Campaña</div>
+                                            </div>
+                                            <select style="font-size: medium;" class="form-control form-control-sm" name="campanaCombo" id="campanaComboid">
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Estatus</div>
+                                            </div>
+                                            <select style="font-size: medium;" class="form-control form-control-sm" name="estatusCombo" id="estatusComboid">
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Supervisores</div>
+                                            </div>
+                                            <select style="font-size: medium;" class="form-control form-control-sm" name="supervisorCombo" id="supervisorComboid">
+                                                </select>
+                                        </div>
+                                    </div>
+                                    <!--div class="row" style="padding-top: 8px;">
+                                        <div class="custom-control custom-checkbox col-3">
+                                            <input type="checkbox" class="custom-control-input" onchange="bloquearCanal()" id="inbCheck" checked>
+                                            <label class="custom-control-label" for="inbCheck" style="float: right;">Inbound</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox col-6">
+                                            <input type="checkbox" class="custom-control-input" onchange="bloquearCanal()" id="outbCheck" checked>
+                                            <label class="custom-control-label" for="outbCheck" style="float: left;">Outbound</label>
+                                        </div>
+                                    </div-->
+                                </div>
+                            </div>
+                            <div class="row mx-0">
+                            <div class="col-md-4">
+                                <div style="padding-top: 5px;">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Est. receso</div>
+                                        </div>
+                                        <select style="font-size: medium;" class="form-control form-control-sm" name="estatusResCombo" id="estatusResComboid">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div style="padding-top: 5px;">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Agente</div>
+                                        </div>
+                                        <input style="font-size: medium;" class="form-control form-control-sm" placeholder="Identificador agente" name="idAgntfil" id="idAgntfil">
+                                        </input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div style="padding-top: 5px;">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Nombre</div>
+                                        </div>
+                                        <input style="font-size: medium;" class="form-control form-control-sm" placeholder="Nombre agente" name="nombreAgntb" id="nombreAgntb">
+                                        </input>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Colas</div>
+                                    </div>
+                                    <select style="font-size: medium;" class="form-control form-control-sm" name="colasCombo" id="colasComboid" multiple>
+                                       </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- barra de botones -->
+            <div class="bg-dark" id="btngrp">
+                <div class="row">
+                    <div class="custom-control custom-switch col-md-2 btnav">
+                        <button class="btn btn-secondary" id="btnAgentesME" onclick="consultarInformacionAgentes('F')" title="Asesores medios escritos" style="top: 14%; font-size: 13px"><span class="icon-user"></span> Asesores medios escritos</button>
+                    </div>                    
+                    <div class="custom-control custom-switch col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input" onchange="bloquearCanal(0)" id="gridSwitch">
+                        <label class="custom-control-label" for="gridSwitch" style="top: 15%; float: right; font-size: 13px;">Detalle</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal(2)" name="checkInd" id="2Check">
+                        <label class="custom-control-label" for="2Check" style="float: right; top: 14%; font-size: 13px">Inbound</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal(3)" name="checkInd" id="3Check">
+                        <label class="custom-control-label" for="3Check"" style="float: right; top: 14%; font-size: 13px">Outbound</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal(4)" name="checkInd" id="4Check">
+                        <label class="custom-control-label" for="4Check"style="float: right; top: 14%; font-size: 13px">Callback</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal('F')" name="checkInd" id="FCheck">
+                        <label class="custom-control-label" for="FCheck"style="float: right; top: 14%; font-size: 13px">Facebook</label> 
+                    </div>                    
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal('T')" name="checkInd" id="TCheck">
+                        <label class="custom-control-label" for="TCheck" style="float: right; top: 14%; font-size: 13px">Twitter</label> 
+                    </div>                 
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal('C')" name="checkInd" id="CCheck">
+                        <label class="custom-control-label" for="CCheck" style="float: right; top: 14%; font-size: 13px">Chat</label> 
+                    </div>     
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal('W')" name="checkInd" id="WCheck">
+                        <label class="custom-control-label" for="WCheck"style="float: right; top: 14%; font-size: 13px">WhatsApp</label> 
+                    </div>             
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal(1)" name="checkInd" id="1Check" checked>
+                        <label class="custom-control-label" for="1Check" style="float: right; top: 14%; font-size: 13px">Ind. Ag</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="mostrarBarra()" name="checkmas" id="masid">
+                        <label class="custom-control-label" for="masid" style="float: right; top: 14%; font-size: 13px">Más</label> 
+                    </div>
+                </div>
+            </div>
+            <div class="bg-dark" id="panelM" style="display: none;">
+                <div class="row" id="panelmd">
+                 <!--   <div class="col-md-1" id="column1">
+                        
+                    </div>-->
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(1)" value="1" name="checksM" id="gCheck" checked>
+                        <label class="custom-control-label" for="gCheck" style="float: right; top: 14%; font-size: 13px">General</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal('M')" name="checkInd" id="MCheck">
+                        <label class="custom-control-label" for="MCheck" style="float: right; top: 14%; font-size: 13px">Mail</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="bloquearCanal('S')" name="checkInd" id="SCheck">
+                        <label class="custom-control-label" for="SCheck" style="float: right; top: 14%; font-size: 13px">SMS</label> 
+                    </div>
+                    <!-- <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(145)" value="145" name="checksM" id="145Check" checked>
+                        <label class="custom-control-label" for="145Check" style="float: right; top: 14%; font-size: 13px">145</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(142)" value="142" name="checksM" id="142Check" checked>
+                        <label class="custom-control-label" for="142Check" style="float: right; top: 14%; font-size: 13px">142</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(111)" value="111" name="checksM" id="111Check" checked>
+                        <label class="custom-control-label" for="111Check" style="float: right; top: 14%; font-size: 13px">111</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(111-2)" value="111-2" name="checksM" id="111-2Check" checked>
+                        <label class="custom-control-label" for="111-2Check" style="float: right; top: 14%; font-size: 13px">111-2</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(111-3)" value="111-3" name="checksM" id="111-3Check" checked>
+                        <label class="custom-control-label" for="111-3Check" style="float: right; top: 14%; font-size: 13px">111-3</label> 
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-1 btnav">
+                        <input type="checkbox" class="custom-control-input cbcontrol" onchange="indicadoresMarcadores(111-4)" value="111-4" name="checksM" id="111-4Check" checked>
+                        <label class="custom-control-label" for="111-4Check" style="float: right; top: 14%; font-size: 13px">111-4</label> 
+                    </div> -->
+                </div>
+            </div>
+            <div class="alert float-rigth" id="alert_principal">
+            </div>
+
+            <div id="divindicadores">
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorF">
+                <br>
+                <div style="height: 50px; margin-bottom: 25px;">
+                    <img src="img/iconMsnFace.png" style="float: left; margin-left: 6%; ">
+                    <h5 style="color: #fff; font-weight: 350;">FACEBOOK</h5>
+                </div>
+                <div>
+                    <ul class="list-group" id="Indicadores">                       
+                        <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                            <div>Int. en atención</div>
+                            <div id="lbelenatnF">0</div>
+                        </li>
+                        <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                            <div data-toggle="tooltip" data-placement="top" title="Interacciones en espera" onclick="consultarInteraccionesEnEspera('F','Facebook')" style="cursor: pointer;">Int. en espera</div>
+                            <div id="lbelenespF">0</div>
+                        </li>
+                        <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                            <div>ATN</div>
+                            <div id="lbelatnF">0</div>
+                        </li>
+                        <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                            <div>ABN</div>
+                            <div id="lbelabnF">0</div>
+                        </li>
+                        <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                            <div>Total</div>
+                            <div id="lbelusrF">0</div>
+                        </li>
+                        <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                            <div>Nivel de atención</div>
+                            <div id="lbelnvlsF">0%</div>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorW">
+                    <br>
+                    <div style="height: 50px;margin-bottom: 25px;">
+                        <img src="img/iconMsnWhat.png" style="float: left; margin-left: 6%; ">
+                        <h5 style="color: #fff; font-weight: 350;">WHATSAPP</h5>
+                    </div>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Int. en atención</div>
+                                <div id="lbelenatnW">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div data-toggle="tooltip" data-placement="top" title="Interacciones en espera" onclick="consultarInteraccionesEnEspera('W', 'WhatsApp')" style="cursor: pointer;">Int. en espera</div>
+                                <div id="lbelenespW">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbelatnW">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbelabnW">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Total</div>
+                                <div id="lbelusrW">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Nivel de atención</div>
+                                <div id="lbelnvlsW">0%</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorT">
+                    <br>
+                    <div style="height: 50px;margin-bottom: 25px;">
+                        <img src="img/iconMsnTW.png" style="float: left; margin-left: 6%; ">
+                        <h5 style="color: #fff; font-weight: 350;">TWITTER</h5>
+                    </div>
+                    <div>
+                        <ul class="list-group" id="Indicadores">                             
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Int. en atención</div>
+                                <div id="lbelenatnT">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div data-toggle="tooltip" data-placement="top" title="Interacciones en espera" onclick="consultarInteraccionesEnEspera('T', 'Twitter')" style="cursor: pointer;">Int. en espera</div>
+                                <div id="lbelenespT">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbelatnT">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbelabnT">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Total</div>
+                                <div id="lbelusrT">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Nivel de atención</div>
+                                <div id="lbelnvlsT">0%</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM" >
+                    <br>
+                    <div style="height: 50px;margin-bottom: 25px;">
+                        <img src="img/iconM.png" style="float: left; margin-left: 6%; width: 48px; height: 48px;">
+                        <h5 style="color: #fff; font-weight: 350;">MAIL</h5>
+                    </div>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Int. en atención</div>
+                                <div id="lbelenatnM">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div data-toggle="tooltip" data-placement="top" title="Interacciones en espera" onclick="consultarInteraccionesEnEspera('M', 'Mail')" style="cursor: pointer;">Int. en espera</div>
+                                <div id="lbelenespM">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbelatnM">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbelabnM">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Total</div>
+                                <div id="lbelusrM">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Nivel de atención</div>
+                                <div id="lbelnvlsM">0%</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorC" >
+                    <br>
+                    <div style="height: 50px;margin-bottom: 25px;">
+                        <img src="img/ICONSMS.svg" style="float: left; margin-left: 6%; width: 48px; height: 48px;">
+                        <h5 style="color: #fff; font-weight: 350;">CHAT</h5>
+                    </div>
+                    <div>
+                        <ul class="list-group" id="Indicadores"> 
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Int. en atención</div>
+                                <div id="lbelenatnCH">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div data-toggle="tooltip" data-placement="top" title="Interacciones en espera" onclick="consultarInteraccionesEnEspera('CH', 'Chat')" style="cursor: pointer;">Int. en espera</div>
+                                <div id="lbelenespCH">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbelatnCH">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbelabnCH">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Total</div>
+                                <div id="lbelusrCH">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Nivel de atención</div>
+                                <div id="lbelnvlsCH">0%</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorS" >
+                    <br>
+                    <div style="height: 50px;margin-bottom: 25px;">
+                        <img src="img/iconM.png" style="float: left; margin-left: 6%; width: 48px; height: 48px;">
+                        <h5 style="color: #fff; font-weight: 350;">SMS</h5>
+                    </div>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Int. en atención</div>
+                                <div id="lbelenatnSMS">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div data-toggle="tooltip" data-placement="top" title="Interacciones en espera" onclick="consultarInteraccionesEnEspera('SMS', 'SMS')" style="cursor: pointer;">Int. en espera</div>
+                                <div id="lbelenespSMS">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbelatnSMS">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbelabnSMS">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Total</div>
+                                <div id="lbelusrSMS">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Nivel de atención</div>
+                                <div id="lbelnvlsSMS">0%</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 1-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador1">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;">
+                    <h5 style="color: #fff; font-weight: 350;">AGENTES</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles">0</div>
+                            </li>
+                            <!-- li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>No conectado</div>
+                                <div id="agNoConectado">0</div>
+                            </li-->
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <!--Indicador 2-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador2">
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; ">
+                    <h5 style="color: #fff; font-weight: 350;">INBOUND</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht">00:00:00</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Indicador 145 -->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM145">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(145)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(145)">AGENTES 145</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles145">0</div>
+                            </li>
+                            <!--li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>No conectado</div>
+                                <div id="agNoConectado145">0</div>
+                            </li-->
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom145">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador145" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(145)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(145)">INBOUND 145</h5><br>
+                    <div style="color: #fff;">
+                        <ul class="list-group" id="Indicadores145">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between"  id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas145">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht145">00:00:00</div>
+                            </li>
+                        </ul>
+                    </div>
+                    </div>
+                <!--Indicador 142-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM142">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(142)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(142)">AGENTES 142</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles142">0</div>
+                            </li>
+                            <!-- li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>No conectado</div>
+                                <div id="agNoConectado145">0</div>
+                            </li-->
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom142">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador142" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(142)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(142)">INBOUND 142</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas142">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht142">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 236-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM236">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(236)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(236)">AGENTES 236</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles236">0</div>
+                            </li>
+                            <!-- li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>No conectado</div>
+                                <div id="agNoConectado145">0</div>
+                            </li-->
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom236">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador236" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(236)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(236)">INBOUND 236</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas236">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht236">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 237-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM237">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(237)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(237)">AGENTES 237</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles237">0</div>
+                            </li>
+                            <!-- li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>No conectado</div>
+                                <div id="agNoConectado145">0</div>
+                            </li-->
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom237">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador237" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(237)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(237)">INBOUND 237</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas237">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht237">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 238-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM238">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(238)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(238)">AGENTES 238</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles238">0</div>
+                            </li>
+                            <!-- li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>No conectado</div>
+                                <div id="agNoConectado145">0</div>
+                            </li-->
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom238">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador238" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(238)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(238)">INBOUND 238</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas238">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht238">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 239-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM239">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(239)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(239)">AGENTES 239</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom239">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador239" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(239)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(239)">INBOUND 239</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas239">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht239">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--indicador 216-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM216">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(216)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(216)">AGENTES 216</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom216">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador216" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(216)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(216)">INBOUND 216</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas216">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht216">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--indicador 130-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicadorM130">
+                    <br>
+                    <img src="img/imgAgente.png" style="float: left; margin-left: 5%;" onclick="llenarGridservidor(130)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(130)">AGENTES 130</h5>
+                    <br>
+                    <div data-type="timetable" data-id="85503" id="wgt-85503" class="tap-sport-tools" style="width:100%; height:auto;">
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Total</div>
+                                <div id="agTotalI130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En operación</div>
+                                <div id="agOperacion130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Activos</div>
+                                <div id="agLlamada130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div>Disponibles</div>
+                                <div id="agDisponibles130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud autorizada</div>
+                                <div id="solAut130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Solicitud de auxiliar</div>
+                                <div id="Sol130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En auxiliar</div>
+                                <div id="Res130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Personales</div>
+                                <div id="ResPer130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Retroalimentación</div>
+                                <div id="ResRetro130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Alimentos</div>
+                                <div id="ResAli130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Capacitación</div>
+                                <div id="ResCap130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" style="padding: .5rem 1.25rem" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Comisión</div>
+                                <div id="ResCom130">0</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador130" >
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; " onclick="llenarGridservidor(130)">
+                    <h5 style="color: #fff; font-weight: 350;" onclick="llenarGridservidor(130)">INBOUND 130</h5><br>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En IVR</div>
+                                <div id="lbenivr130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En espera</div>
+                                <div id="lbenEspera130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>En atención</div>
+                                <div id="lenAtencion130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>+8:30</div>
+                                <div id="lMayor130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Recibidas</div>
+                                <div id="lblrecibidas130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ATN</div>
+                                <div id="lbllContestadas130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>ABN</div>
+                                <div id="lbllAbandonadas130">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblaht130">00:00:00</div>
+                            </li>
+                       
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 3-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador3">
+                    <br>
+                    <img src="img/imgTelefono.png" style="float: left; margin-left: 6%; ">
+                    <h5 style="color: #fff; font-weight: 350;">OUTBOUND</h5>
+                    <div><br>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Universo</div>
+                                <div id="lbeluni">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En atención</div>
+                                <div id="lblatencion">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Nivel de servicio</div>
+                                <div id="lbelserv">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Pendientes</div>
+                                <div id="lbelpendiente">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Realizadas</div>
+                                <div id="lbelreal">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Exitosas</div>
+                                <div id="lbelsucces">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">No exitosas</div>
+                                <div id="lbelnoexi">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Re-llamar</div>
+                                <div id="lbelrellamar">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblahtO">00:00:00</div>
+                            </li>
+                            <!--li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div><u class="float-left" style="text-align: initial;">Primera ronda</u><br>
+                                <label id="lblRonda1" class="float-left" style="font-size: x-small;">Espera</label><label id="lblcrono" style="font-size: x-small; float: rigth;"></label>
+                                </div>
+                                <button class="btn" id="ronda1" onclick="lnzRonda_1()" style="height: fit-content; width: fit-content;"><i id="play1" class='icon-play3' style='color: #269EE3; font-size: 15px;'></i></button>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div><u class="float-left" style="text-align: initial;">Segunda ronda</u> <br>
+                                <label id="lblRonda2" class="float-left" style="font-size: x-small;">Espera</label><label id="lblcrono2" style="font-size: x-small; float: rigth;"></label>
+                                </div>
+                                <button class="btn" id="ronda2" onclick="lnzRonda_2()" style="height: fit-content; width: fit-content;"><i id="play2" class='icon-play3' style='color: #269EE3; font-size: 15px;'></i></button>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div><u class="float-left" style="text-align: initial;">Tercera ronda</u> <br>
+                                    <label id="lblRonda3" class="float-left" style="font-size: x-small;">Espera</label><label id="lblcrono3" style="font-size: x-small; float: rigth;"></label>
+                                </div>
+                                <button class="btn" id="ronda3" onclick="lnzRonda_3()" style="height: fit-content; width: fit-content;"><i id="play3" class='icon-play3' style='color: #269EE3; font-size: 15px;'></i></button>
+                            </li-->
+                        </ul>
+                    </div>
+                </div>
+                <!--Indicador 4-->
+                <div class="col-md-5 float-left mt-3 table-responsive" id="indicador4">
+                    <br>
+                    <img src="img/imgTelefonoArroba.png" style="float: left; margin-left: 6%; ">
+                    <h5 style="color: #fff; font-weight: 350;"> CALLBACK/WEB CALLBACK</h5>
+                    <div>
+                        <ul class="list-group" id="Indicadores">
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Universo</div>
+                                <div id="lbelunicb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">En atención</div>
+                                <div id="lblatencioncb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">Nivel de servicio</div>
+                                <div id="lbelservcb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Pendientes</div>
+                                <div id="lbelpendientecb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Realizadas</div>
+                                <div id="lbelrealcb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Exitosas</div>
+                                <div id="lbelsuccescb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div class="float-left" style="text-align: initial;">No exitosas</div>
+                                <div id="lbelnoexicb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>Re-llamar</div>
+                                <div id="lbelrellamarcb">0</div>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div>AHT</div>
+                                <div id="lblahtcb">00:00:00</div>
+                            </li>
+                            <!--li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div><u class="float-left" style="text-align: initial;">Primera ronda</u><br>
+                                <label id="lblRonda1" class="float-left" style="font-size: x-small;">Espera</label><label id="lblcrono" style="font-size: x-small; float: rigth;"></label>
+                                </div>
+                                <button class="btn" id="ronda1" onclick="lnzRonda_1()" style="height: fit-content; width: fit-content;"><i id="play1" class='icon-play3' style='color: #269EE3; font-size: 15px;'></i></button>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div><u class="float-left" style="text-align: initial;">Segunda ronda</u> <br>
+                                <label id="lblRonda2" class="float-left" style="font-size: x-small;">Espera</label><label id="lblcrono2" style="font-size: x-small; float: rigth;"></label>
+                                </div>
+                                <button class="btn" id="ronda2" onclick="lnzRonda_2()" style="height: fit-content; width: fit-content;"><i id="play2" class='icon-play3' style='color: #269EE3; font-size: 15px;'></i></button>
+                            </li>
+                            <li class="list-group-item d-flex col-12 justify-content-between" id="IndicadoresCol">
+                                <div><u class="float-left" style="text-align: initial;">Tercera ronda</u> <br>
+                                    <label id="lblRonda3" class="float-left" style="font-size: x-small;">Espera</label><label id="lblcrono3" style="font-size: x-small; float: rigth;"></label>
+                                </div>
+                                <button class="btn" id="ronda3" onclick="lnzRonda_3()" style="height: fit-content; width: fit-content;"><i id="play3" class='icon-play3' style='color: #269EE3; font-size: 15px;'></i></button>
+                            </li-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!--Grid -->
+            <div>
+                <div class="float-left mt-2" id="divgrid" style="margin-left: 1%; top:-4px; width: 98%;">
+                    <div class="card" style="padding: 10px;" id="cardgrid">
+                        <div class="card-container">
+                            <div style="font-size: larger; text-align: left;">Detalles</div><br>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" style="width: 10%;" id="listab2">
+                                    <a style="padding: .5rem 0rem;" class="nav-link active" id="pills-tab2" data-toggle="pill" href="#pills-gridP" role="tab" aria-controls="pills-gridP" aria-selected="true">Inbound</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listab3">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tab3" data-toggle="pill" href="#pills-outb" role="tab" aria-controls="pills-outb" aria-selected="false">Outbound</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listab4">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tab4" data-toggle="pill" href="#pills-cb" role="tab" aria-controls="pills-cb" aria-selected="false">Callback</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listabF">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tabF" data-toggle="pill" href="#pills-fbms" role="tab" aria-controls="pills-fbms" aria-selected="false">Facebook</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listabW">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tabW" data-toggle="pill" href="#pills-wht" role="tab" aria-controls="pills-wht" aria-selected="false">WhatsApp</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listabT">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tabT" data-toggle="pill" href="#pills-twt" role="tab" aria-controls="pills-twt" aria-selected="false">Twitter</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listabM">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tabM" data-toggle="pill" href="#pills-mail" role="tab" aria-controls="pills-mail" aria-selected="false">Mail</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listabC">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tabC" data-toggle="pill" href="#pills-chat" role="tab" aria-controls="pills-chat" aria-selected="false">Chat</a>
+                                </li>
+                                <li class="nav-item" style="width: 10%;" id="listabS">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-tabS" data-toggle="pill" href="#pills-sms" role="tab" aria-controls="pills-sms" aria-selected="false">SMS</a>
+                                </li>
+                                <!-- <li class="nav-item" style="width: 10%;" id="listab1">
+                                    <a style="padding: .5rem 0rem;" class="nav-link" id="pills-iagente-tab" data-toggle="pill" href="#pills-iagente" role="tab" aria-controls="pills-iagente" aria-selected="false">Indicadores</a>
+                                </li> -->
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-gridP" role="tabpanel" aria-labelledby="pills-gridP-tab"><br>
+                                    <table id="tableagentes" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <th class="text-center">Servidor</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha</th>
+                                                <th class="text-center">Hora</th>
+                                                <th class="text-center">Duraci&oacute;n</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Id llamada</th>
+                                                <th class="text-center">Motivo permiso</th>
+                                                <th class="text-center">Extensi&oacute;n</th>
+                                                <th class="text-center">Marcador</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade show" id="pills-outb" role="tabpanel" aria-labelledby="pills-outb-tab"><br>
+                                    <table id="tableagentesoutb" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha</th>
+                                                <th class="text-center">Hora</th>
+                                                <th class="text-center">Duraci&oacute;n</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Id llamada</th>
+                                                <th class="text-center">Motivo permiso</th>
+                                                <th class="text-center">Extensi&oacute;n</th>
+                                                <th class="text-center">Agente</th>
+                                                <th class="text-center">Marcador</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade show" id="pills-cb" role="tabpanel" aria-labelledby="pills-cb-tab"><br>
+                                    <table id="tableagentescb" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha</th>
+                                                <th class="text-center">Hora</th>
+                                                <th class="text-center">Duraci&oacute;n</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Id llamada</th>
+                                                <th class="text-center">Motivo permiso</th>
+                                                <th class="text-center">Extensi&oacute;n</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-iagente" style="overflow-x: auto;" role="tabpanel" aria-labelledby="pills-iagente-tab"><br>
+                                    <table id="tableidnagentes" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Extensi&oacute;n</th>
+                                                <th class="text-center">ATN</th>
+                                                <th class="text-center">Duraci&oacute;n</th>
+                                                <th class="text-center">AHT</th>
+                                                <!--th class="text-center">Conexión</th-->
+                                                <!--th class="text-center">Recesos</th-->
+                                                <!-- th class="text-center">Tiempo en receso</th-->
+                                                <th class="text-center">Hora actualización</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <!-- th></th>
+                                                <th></th>
+                                                <th></th> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-fbms" role="tabpanel" aria-labelledby="pills-fbms-tab"><br>
+                                    <table id="tablefacebook" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha asignación</th>
+                                                <th class="text-center">Hora asignación</th>
+                                                <th class="text-center">Fecha atención</th>
+                                                <th class="text-center">Hora atención</th>
+                                                <th class="text-center">Duraci&oacute;n</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Sesión</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-wht" role="tabpanel" aria-labelledby="pills-wht-tab"><br>
+                                    <table id="tablewhatsapp" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha asignación</th>
+                                                <th class="text-center">Hora asignación</th>
+                                                <th class="text-center">Fecha atención</th>
+                                                <th class="text-center">Hora atención</th>
+                                                <th class="text-center">Duraci&oacute;n atención</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Sesión</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-twt" role="tabpanel" aria-labelledby="pills-twt-tab"><br>
+                                    <table id="tabletwt" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha asignación</th>
+                                                <th class="text-center">Hora asignación</th>
+                                                <th class="text-center">Fecha atención</th>
+                                                <th class="text-center">Hora atención</th>
+                                                <th class="text-center">Duraci&oacute;n atención</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Sesión</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-mail" role="tabpanel" aria-labelledby="pills-mail-tab"><br>
+                                    <table id="tablemail" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha asignación</th>
+                                                <th class="text-center">Hora asignación</th>
+                                                <th class="text-center">Fecha atención</th>
+                                                <th class="text-center">Hora atención</th>
+                                                <th class="text-center">Duraci&oacute;n atención</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Sesión</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab"><br>
+                                    <table id="tablechat" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Fecha asignación</th>
+                                                <th class="text-center">Hora asignación</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha atención</th>
+                                                <th class="text-center">Hora atención</th>
+                                                <th class="text-center">Duraci&oacute;n atención</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Sesión</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-sms" role="tabpanel" aria-labelledby="pills-sms-tab"><br>
+                                    <table id="tablesms" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                                        <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                            <tr>
+                                                <th class="text-center">Canal</th>
+                                                <th class="text-center">Agente</th>
+                                                <!-- <th class="text-center">Foto</th> -->
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estatus</th>
+                                                <th class="text-center">Fecha asignación</th>
+                                                <th class="text-center">Hora asignación</th>
+                                                <th class="text-center">Fecha atención</th>
+                                                <th class="text-center">Hora atención</th>
+                                                <th class="text-center">Duraci&oacute;n atención</th>
+                                                <th class="text-center">Cliente</th>
+                                                <th class="text-center">Tel&eacute;fono</th>
+                                                <th class="text-center">Sesi&eacuto;n</th>
+                                                <th class="text-center">Agente</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+    </div>
+    <!--Configurar llamada-->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Configuración de video</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <!--div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div-->
+                <div class="modal-body">
+                    <div align="left">
+                        <div class="form-group">
+                            <input type="radio" name="radiobtnVideo" onclick="habilitarInputs()" id="RnumLlamadas"> Número de llamadas <br>
+                            <input id="numLLamadas" type="number" class="form-control" aria-required="true" aria-invalid="false" value="0" min="0" disabled>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="radiobtnVideo"  onclick="habilitarInputs()" id="RnumTiempo"> Número de tiempo <br>
+                            <div class="row">
+                                <div class="col-md-1" style="margin-top: 1%;"><label>hh</label></div>
+                                <div class="col-md-3"><input id="Horas" type="number" class="form-control" aria-required="true" aria-invalid="false" value="00" min="0" max="24" disabled></div>
+                                <div class="col-md-1" style="margin-top: 1%;"><label>mm</label></div>
+                                <div class="col-md-3"><input id="minutos" type="number" class="form-control" aria-required="true" aria-invalid="false" value="00" min="0" max="60" disabled></div>
+                                <div class="col-md-1" style="margin-top: 1%;"><label>ss</label></div>
+                                <div class="col-md-3"><input id="segundos" type="number" class="form-control" aria-required="true" aria-invalid="false" value="00" min="0" max="60" disabled></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="radiobtnVideo" onclick="habilitarInputs()" id="RnumDias"> Número de días <br>
+                            <input id="numDias" type="text" class="form-control" aria-required="number" value="0" aria-invalid="false" min="0" disabled>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="radiobtnVideo" onclick="habilitarInputs()" id="Rsiempre"> Siempre <br>
+
+                            <input type="radio" name="radiobtnVideo"  onclick="habilitarInputs()" id="Rno"> No grabar <br>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="limpiarVideo()" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarVideo()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL AGENTE -->
+    <div class="modal fade" id="modalAgnt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="title" style="color: black;">Detalle</h5>
+                </div>
+                <div class="modal-footer bg-dark float-left" id="btngrp">
+                    <button class="btn btn-link btn-sm btnav" onclick="configurarVideo()" style="color: white;"> <img src="img/btnVideo.png" alt="btnVideo" width="15px"> Configura video</button>
+                    <button class="btn btn-link btn-sm btnav" onclick="monitoreo()" style="color: white;"> <img src="img/computer-blanco.svg" alt="btnMonitoreo" width="15px"> Plataforma monitoreo</button>
+                </div>
+                <div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-left: 1%;">
+                            <div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Agente</div>
+                                    </div>
+                                    <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="agente" disabled>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Usuario</div>
+                                        </div>
+                                        <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="usragente" disabled>
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Extensión</div>
+                                            </div>
+                                            <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="extusr" disabled>
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Marcador</div>
+                                        </div>
+                                        <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="marcador" disabled>
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Permiso</div>
+                                        </div>
+                                        <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="motivoPermiso" disabled>
+                                        </input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Cliente</div>
+                                    </div>
+                                    <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="cliente" disabled>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Teléfono</div>
+                                            </div>
+                                            <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="telefono" disabled>
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Id llamada</div>
+                                            </div>
+                                            <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="idllamada" disabled>
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control-sm">Extensión de escucha</div>
+                                </div>
+                                <input style="font-size: medium;" type="number" min="0" class="form-control form-control-sm" id="extensiontxtid" name="extensiontxt" placeholder="Escriba la extensión escucha">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <input style="font-size: medium;" type="hidden" class="form-control form-control-sm" id="usrSel" name="usuarioSelec" placeholder="Usuario Selec." disabled>
+                        </div>
+                        <div>
+                            <input style="font-size: medium;" type="hidden" id="extSel" name="exttxt" class="form-control form-control-sm" placeholder="Ext" disabled>
+                        </div>
+                        <div>
+                            <input style="font-size: medium;" type="hidden" class="form-control form-control-sm" id="nombreSel" name="nombretxt" placeholder="Nombre" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-dark" id="btngrp">
+                    <button class="btn btn-link btn-sm btnav" onclick="llamadaAcc(1)" style="color: white;"> <img src="img/btnTelefono.png" alt="btnTelefono" width="15px"> Escucha silenciosa</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="llamadaAcc(2)" style="color: white;"> <img src="img/btnTelefono.png" alt="btnTelefono" width="15px"> Asesorar agente</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="llamadaAcc(3)" style="color: white;"> <img src="img/btnTelefono.png" alt="btnTelefono" width="15px"> Interactuar con el cliente</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="recesos(0)" style="color: white;"> <img src="img/btnNoReceso.png" alt="btnNoReceso" width="15px"> Rechazar receso</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="recesos(1)" style="color: white;"> <img src="img/btnReceso.png" alt="btnReceso" width="15px"> Autorizar receso</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="abrirSesionModal()" style="color: white;"> <img src="img/btnAgente.png" alt="btnAgente" width="15px"> Cerrar sesión agente</button> |
+                    <button type="button" class="btn btn-link btn-sm btnav" style="color: white;" data-dismiss="modal" aria-label="Close"> <img src="img/btnCerrar.png" alt="btnClose" width="15px"> Cerrar</button>
+                    <!--button class="btn btn-link btn-sm btnav" onclick="configurarVideo()" style="color: white;"> <img src="img/btnVideo.png" alt="btnVideo" width="15px"> Configurar video</button> |-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AGENTE INETRACCIONES RS -->
+    <div class="modal fade" id="modalAgntM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="title" style="color: black;">Detalle</h5>
+                </div>
+                <div class="modal-footer bg-dark float-left" id="btngrp">
+                    <button class="btn btn-link btn-sm btnav" onclick="monitoreo()" style="color: white;"> <img src="img/computer-blanco.svg" alt="btnMonitoreo" width="15px"> Plataforma monitoreo</button>
+                </div>
+                <div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-left: 1%;">
+                            <div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Agente</div>
+                                    </div>
+                                    <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="agenteM" disabled>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text form-control-sm">Usuario</div>
+                                        </div>
+                                        <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="usragenteM" disabled>
+                                        </input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Cliente</div>
+                                    </div>
+                                    <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="clienteM" disabled>
+                                    </input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Teléfono</div>
+                                            </div>
+                                            <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="telefonoM" disabled>
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text form-control-sm">Sesión</div>
+                                            </div>
+                                            <input style="font-size: medium;" class="form-control form-control-sm" name="idAgntfil" id="idllamadaM" disabled>
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-dark" id="btngrp">                    
+                    <!-- <button class="btn btn-link btn-sm btnav" onclick="llamadaAcc(2)" style="color: white;"> <img src="img/btnTelefono.png" alt="btnTelefono" width="15px"> Asesorar agente</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="llamadaAcc(3)" style="color: white;"> <img src="img/btnTelefono.png" alt="btnTelefono" width="15px"> Interactuar con el cliente</button> |-->
+                    <button class="btn btn-link btn-sm btnav" onclick="recesos(0)" style="color: white;"> <img src="img/btnNoReceso.png" alt="btnNoReceso" width="15px"> Rechazar receso</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="recesos(1)" style="color: white;"> <img src="img/btnReceso.png" alt="btnReceso" width="15px"> Autorizar receso</button> |
+                    <button class="btn btn-link btn-sm btnav" onclick="cerrarMediosEscritosInteraccion()" style="color: white;"> <img src="img/btnAgente.png" alt="btnAgente" width="15px"> Cerrar sesión agente</button> | 
+                    <button class="btn btn-link btnav" onclick="mostrarConversacion()" style="color: white;"> <span class="icon-mail2"></span> Ver conversación </button> |
+                    <button type="button" class="btn btn-link btn-sm btnav" style="color: white;" data-dismiss="modal" aria-label="Close"> <img src="img/btnCerrar.png" alt="btnClose" width="15px"> Cerrar</button>
+                    <!--button class="btn btn-link btnav" onclick="configurarVideo()" style="color: white;"> <img src="img/btnVideo.png" alt="btnVideo" width="15px"> Configurar video</button> |-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL CERRAR SESION-->
+    <div class="modal fade" id="sesionModal"  tabindex="-1" role="dialog"  >
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Cerrar sesión del agente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="regresarMediosEscitosAgentes()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <!--div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div-->
+                <div class="modal-body">
+                    <div class="form-group" style=" text-align: left;">
+                        <label >¿Que sesion desea cerrar?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioCanal" id="radioInb" value="I">
+                            <label class="form-check-label" for="radioInb">
+                              Inbound
+                            </label>
+                         </div>
+                         <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioCanal" id="radioOutb" value="O">
+                            <label class="form-check-label" for="radioOutb">
+                              Outbound
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioCanal" id="radioMe" value="ME">
+                            <label class="form-check-label" for="radioMe">
+                              Medios escritos
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioCanal" id="radioAll" value="I/0/ME">
+                            <label class="form-check-label" for="radioAll">
+                              Cerrar todo
+                            </label>
+                        </div>
+                          
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="regresarMediosEscitosAgentes()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="cerrarSesionAgt()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL AGENTES POR MARCADOR-->
+    <div class="modal fade" id="Modalgrid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 90%!important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloGridModal" style="color: black;"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <!--div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div style="padding-top: 5px;">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Estatus</div>
+                                    </div>
+                                    <select style="font-size: medium;" class="form-control form-control-sm" name="stsRecCombo" id="stsCombo">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div style="padding-top: 5px;">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text form-control-sm">Est. receso</div>
+                                    </div>
+                                    <select style="font-size: medium;" class="form-control form-control-sm" name="stsRecCombo" id="stsRecCombo">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button onclick="ConsultarGrid()" id="btnConsultasG" type="button" class="btn btn-success float-rigth mx-1"><span class="icon-search"></span></button>
+                        </div>
+                    </div>
+                    <div id="divTabla">
+                        <table id="tableModal" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                            <thead style="background-color: #00CC66; color: white; font-size: medium;">
+                                <tr>
+                                    <th class="text-center">Canal</th>
+                                    <th class="text-center">Agente</th>
+                                    <th class="text-center">Servidor</th>
+                                    <th class="text-center">Extensi&oacute;n</th>
+                                    <th class="text-center">Cola espera</th>
+                                    <!-- <th class="text-center">Foto</th> -->
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Estatus</th>
+                                    <th class="text-center">Fecha</th>
+                                    <th class="text-center">Hora</th>
+                                    <th class="text-center">Duraci&oacute;n</th>
+                                    <th class="text-center">Tel&eacute;fono</th>
+                                    <th class="text-center">Cliente</th>
+                                    <th class="text-center">Id llamada</th>
+                                    <th class="text-center">Supervisor</th>
+                                    <th class="text-center">Motivo permiso</th>
+                                    <th class="text-center">Marcador</th>
+                                    <th class="text-center">Agente</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="loaderModal" style="display: none;">
+                        <div class="spinner-grow text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL INTERACCIONES EN ESPERA -->
+    <div class="modal fade" id="Modalinteracciones" role="dialog"  >
+        <div class="modal-dialog" role="document" style="max-width: 90%!important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaltituloIE" style="color: black;"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <!--div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div-->
+                <div class="modal-body">
+                    <div id="divTablaIE">
+                        <table id="tableInteracciones" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                            <thead id="theadinteracciones">
+                                <tr>
+                                    <th class="text-center">Canal</th>
+                                    <th class="text-center">Nombre cliente</th>
+                                    <th class="text-center">Fecha</th>
+                                    <th class="text-center">Hora</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="loaderModalIE" style="display: none;">
+                        <div class="spinner-grow" role="status" style="color: rgba(66,103,178,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(30,190,165,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(29,161,242,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(224,147,160,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(234,190,63,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(125, 60, 152,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+     <!--MODAL INTERACCIONES EN ESPERA -->
+     <div class="modal fade" id="ModalInformacionAgentes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 90%!important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaltituloInformacionAgentes" style="color: black;"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <!--div class="alert float-rigth" id="alert_modal" style="display: none;">
+                </div-->
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <div style="padding-top: 5px;">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text form-control-sm">Asesor</div>
+                                </div>
+                                <input style="font-size: medium;" class="form-control form-control-sm" placeholder="Identificador asesor" name="idAgntme" id="idAgntme">
+                                </input>
+                                <button type="button" class="btn btn-secondary" onclick="consultarInformacionAgentesbd('F')" style="margin-left: 10px;"  >Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="divTablaInformacionAgentes"> 
+
+                        <table id="tableInformacionAgentes" class="table table-striped table-bordered dt-responsive nowrap"  style=" font-size:13px; width:100%;" cellspacing="0">
+                            <thead id="theadInformacionAgentes" style="color: white; width:100%;" >
+                                <tr>
+                                    <th class="text-center">.</th>
+                                    <th class="text-center">Asesor</th>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">I. Habilitadas</th>
+                                    <th class="text-center">I. Disponibles</th>  
+                                    <th class="text-center"><span class="icon-facebook" style="color:rgba(66,103,178,1)"></span> </th>
+                                    <th class="text-center"><span class="icon-twitter" style="color:rgba(29,161,242,1)"></span> </th>                                                                    
+                                    <th class="text-center"><span class="icon-hangouts" style="color:rgba(234,190,63,1)"></span> </th>  
+                                    <th class="text-center">T. Ocupadas</th> 
+                                    <th class="text-center">Prox. Salir</th> 
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="loaderModalInformacionAgentes" style="display: none;">
+                        <div class="spinner-grow" role="status" style="color: rgba(66,103,178,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(30,190,165,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(29,161,242,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(224,147,160,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(234,190,63,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status" style="color: rgba(125, 60, 152,1);">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    </div>
+    <script src="js/socket.io.js"></script>
+    <script src="js/inicio.js"></script>
+</body>
+
+</html>

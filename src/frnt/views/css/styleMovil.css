@@ -1,0 +1,819 @@
+.mobile-container {
+    max-width: 480px;
+    margin: auto;
+    background-color: #555;
+    height: 500px;
+    color: white;
+    border-radius: 10px;
+  }
+  
+  .topnav {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    background: rgb(119,0,0);
+    background: -moz-linear-gradient(top, rgba(119,0,0,1) 0%, rgba(218,0,0,1) 100%);
+    background: -webkit-linear-gradient(top, rgba(119,0,0,1) 0%,rgba(218,0,0,1) 100%);
+    background: linear-gradient(to bottom, rgba(119,0,0,1) 0%,rgba(218,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#770000', endColorstr='#da0000',GradientType=0 );
+    z-index: 9;
+    overflow: hidden;
+    background-color: #343a40;
+    position: relative;
+    margin-bottom: 0px;
+    padding: 0rem 0rem;
+  }
+  
+  .topnav #myLinks {
+    display: none;
+  }
+  
+  .topnav a {
+    float: left;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a.icon {
+    float: left;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+
+
+
+    @media (max-width: 980px) { /* Con esto lo ocultamos en la movil y se deja visible solo en pc */
+        
+        #mostrarenmobile{
+            display: block;
+        }
+        #mostrarenPC{
+            display: none;
+        }
+        #titulo_movil{
+          display: block;
+        }
+        #titulo{
+          display: none;
+        }
+        #modulosCont{
+          display: none;
+        }
+        .fc-button-group{
+          width: 45.5%!important;
+          font-size: smaller!important;
+        }
+        .fc-today-button .fc-button .fc-button-primary{
+          font-size: 85%!important;
+        }
+        .fc-toolbar>*>:not(:first-child){
+          margin-left: 1.3em!important;
+          font-size: smaller;
+        }
+        .fc-toolbar.fc-header-toolbar{
+          margin-bottom: 4em!important;
+        }
+        .fc-center{
+          position: absolute;
+          top: 15%;
+          left: 5%;
+        }
+        #dropdownid{
+          display: block;
+        }
+        #btnsg{
+          display: none;
+        }
+
+        #IndicadoresCol{
+          background: transparent;
+          border-right:none;
+          border-left: none;
+          width: 100%;
+          font-size: 16px;
+        }
+
+        #usuario{
+          font-size: 14px;
+        }
+
+        #usuario_{
+          font-size: 16px;
+        }
+
+        #circulo_estatus{
+          width: 15px;
+          height: 15px;
+          -moz-border-radius: 50%;
+          -webkit-border-radius: 50%;
+          border-radius: 50%;
+          background: #5cb85c;
+          margin-right: 0.5rem!important;
+        }
+
+        #logoSpartacus{
+          width: 175px;
+          margin-left: 0%!important;
+        }
+
+        #indicadorF{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(66,103,178,1) 0%, rgba(51,51,51,1) 110%);
+          height: 100%! important;
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorW{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(30,190,165,1) 0%, rgba(51,51,51,1) 110%);
+          height: 100%;
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorT{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(29,161,242,1) 0%, rgba(51,51,51,1) 110%);
+          height: 100%;
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(66,103,178,1) 0%, rgba(51,51,51,1) 110%);
+          height: 100%;
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorC{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(234, 190, 63,1) 0%, rgba(51,51,51,1) 110%);
+          height: 100%;
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorS{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(29,161,242,1) 0%, rgba(51,51,51,1) 110%);
+          height: 100%;
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador1{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM145{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM142{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM237{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM238{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM239{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM230{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM216{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicadorM130{
+          background: rgb(0,204,102);
+          background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+          margin-left: 5%; 
+          width: 100%; 
+          height: 100%;
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador2{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador230{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador234{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador236{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador237{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador238{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador239{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador216{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador130{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador3{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #indicador4{
+          background: rgb(38,155,222);
+          background: linear-gradient(180deg, rgba(108,117,125,1) 0%, rgba(51,51,51,1) 110%);
+          margin-left: 5%;
+          width: 100%;
+          height: 100%; 
+          top:-4px;
+          font-size: smaller;
+        }
+        #divIndR{
+          padding-left: 1%;
+          margin-right: -7%;
+        }
+        img{
+          float: left; 
+          margin-left: 6%; 
+          width: 48px;
+          height: 48px;
+        }
+        h5{
+          color: #fff; 
+          font-weight: 350;
+          font-size: 2rem;
+        }
+        .col-md-4 h6{
+          color: #fff; 
+          font-weight: 350;
+          font-size: 1.5rem;
+        }
+        
+        #divindicadores
+        {
+          height: 620px;
+        }
+
+        button img{
+          width: 15px;
+          height: 15px;
+          margin-left: 0%; 
+          float: none;
+        }
+        #btnescucha{
+          display: none;
+        }
+        #btnasesora{
+          display: none;
+        }
+        #btninteractua{
+          display: none;
+        }
+}
+
+@media (min-width: 981px) { /* Con esto lo ocultamos en la movil y se deja visible solo en pc */
+    #mostrarenmobile{
+        display: none;
+    }
+    #mostrarenPC{
+        display: block;
+    }
+    #titulo_movil{
+      display: none;
+    }
+    #titulo{
+      display: block;
+    }
+
+    #modulosCont{
+      display: block;
+    }
+    #dropdownid{
+      display: none;
+    }
+    #btnsg{
+      display: block;
+    }
+
+    #IndicadoresCol{
+      background: transparent;
+      border-right:none;
+      border-left: none;
+      width: 100%;
+    }
+
+    #usuario{
+      font-size: 16px;
+    }
+
+    #usuario_{
+      font-size: 16px;
+    }
+
+    #logoSpartacus{
+      width: 275px;
+    }
+
+    #circulo_estatus{
+      width: 20px;
+      height: 20px;
+      -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      background: #5cb85c;
+      margin-right: 1rem!important;
+    }
+
+    #indicadorF{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(66,103,178,1) 0%, rgba(51,51,51,1) 110%);
+      height: 100%;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicadorW{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(30,190,165,1) 0%, rgba(51,51,51,1) 110%);
+      height: 100%;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicadorT{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(29,161,242,1) 0%, rgba(51,51,51,1) 110%);
+      height: 100%;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicadorM{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(224,147,160,1) 0%, rgba(51,51,51,1) 110%);
+      height: 100%;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicadorC{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(234, 190, 63,1) 0%, rgba(51,51,51,1) 110%);
+      height: 100%;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicadorS{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, #7D3C98 0%, rgba(51,51,51,1) 110%);
+      height: 100%;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador1{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM145{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM142{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM237{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM238{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM239{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM230{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM216{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM130{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM203{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM204{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM205{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM206{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM220{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicadorM221{
+      background: rgb(0,204,102);
+      background: linear-gradient(180deg, rgba(0,204,102,1) 0%, rgba(51,51,51,1) 110%); 
+      height: 100%! important; 
+      margin-left: 1%; 
+      width: 15%; 
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicador2{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador145{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador142{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador236{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador237{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador238{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador239{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador216{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador130{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador203{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador204{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador205{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador206{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador220{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador221{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(38,155,222,1) 0%, rgba(51,51,51,1) 110%);
+      margin-left: 1%;
+      width: 15%;
+      height: 100%; 
+      top:-4px;
+    }
+    #indicador3{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 110%);
+      height: 100%! important;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%! important; 
+      top:-4px;
+    }
+    #indicador4{
+      background: rgb(38,155,222);
+      background: linear-gradient(180deg, rgba(108,117,125,1) 0%, rgba(51,51,51,1) 110%);
+      height: 100%! important;
+      margin-left: 1%;
+      width: 15%;
+      height: 100%! important; 
+      top:-4px;
+    }
+    img{
+      float: left; 
+      margin-left: 6%; 
+      width: 48px;
+      height: 48px;
+    }
+    h5{
+      color: #fff; 
+      font-weight: 350;
+    }
+    button img{
+      width: 15px;
+      height: 15px;
+      margin-left: 0%; 
+      float: none;
+    }
+
+    #divindicadores
+    {
+      height: 599px;
+    }
+    #btnescucha{
+      display: block;
+    }
+    #btnasesora{
+      display: block;
+    }
+    #btninteractua{
+      display: block;
+    }
+}
